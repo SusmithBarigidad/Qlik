@@ -1,0 +1,140 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+ 
+ 
+Error_Suspects = ['Error', 'ERROR', 'Failed', 'Failure']
+ 
+ 
+def detect_suspects(file_path, word_list):
+ 
+ 
+    with open(file_path) as LogFile:
+        Summary = {word:[] for word in word_list}
+        failure = ':'
+        for num, line in enumerate(LogFile, start=1):
+            for word in word_list:
+                if word in line:
+                    failure += '<li>'+line+'</li>'
+    return failure
+ 
+ 
+Result = detect_suspects(r"C:\Users\sangramr\Desktop\Error_File.log", Error_Suspects)
+ 
+ 
+def py_mail(SUBJECT, BODY, TO, FROM):
+    MESSAGE = MIMEMultipart('alternative')
+    MESSAGE['subject'] = SUBJECT
+    MESSAGE['To'] = TO
+    MESSAGE['From'] = FROM
+    MESSAGE.preamble = """    """
+    HTML_BODY = MIMEText(BODY, 'html')
+    MESSAGE.attach(HTML_BODY)
+ 
+ 
+    server = smtplib.SMTP('smtp.company.local',25)
+ 
+ 
+    if __name__ == "__main__":
+        server.set_debuglevel(1)
+    server.sendmail(FROM, [TO], MESSAGE.as_string())
+    server.quit()
+ 
+ 
+if Result != None:
+ 
+ 
+    if __name__ == "__main__":
+        """Executes if the script is run as main script (for testing purposes)"""
+ 
+ 
+        email_content = """
+ 
+ 
+       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Qlik Sense Alerts!</title>
+</head>
+ 
+ 
+<body bgcolor="#8d8e90">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#8d8e90">
+  <tr>
+    <td><table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
+ 
+ 
+         <tr>
+          <td align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#68696a; font-size:36px; text-transform:uppercase"><strong>Qlik Sense Alerts!</strong></font></td>
+        </tr>
+        <tr>
+          <td align="center"><a href= "" target="_blank"><img src="http://us.analytics8.com/images/uploads/general/762/qlikmaps-2.png" alt="" width="598" height="249" border="0"/></a></td>
+        </tr>
+        <tr>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="7%"> </td>
+                <td width="58%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="95%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td height="35" align="left" valign="middle" style="border-bottom:2px dotted #000000"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#000000; font-size:25px"><strong><em>Error Information</em></strong></font></td>
+                          </tr>
+                          <tr>
+                            <!-- our content -->
+ 
+ 
+                            <ul> Error List
+                             """
+ 
+ 
+        email_content += Result
+ 
+ 
+        email_content += """
+                        </ul>
+                          </tr>
+ 
+ 
+                        </table></td>
+                        <td width="5%" style="border-right:2px dashed #95989a"> </td>
+                      </tr>
+                    </table></td>
+                  </tr>
+                </table></td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr>
+          <td> </td>
+        </tr>
+        <tr>
+          <td align="center"><font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#231f20; font-size:8px"><strong>Your Company Name | <a href= "http://google.com" style="color:#010203; text-decoration:none">data@company.co.uk</a></strong></font></td>
+        </tr>
+        <tr>
+          <td> </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+</html>
+ 
+ 
+ 
+ 
+         """
+ 
+ 
+        TO = 'sangramreddy@company.co.uk'
+        FROM ='data@company.co.uk'
+ 
+ 
+        py_mail("Qlik Sense Alerts!", email_content, TO, FROM)
+
