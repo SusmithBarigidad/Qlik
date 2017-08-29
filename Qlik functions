@@ -1,0 +1,28 @@
+•	Count([WF Process #])/Count(Total<[Fis Quarter]>[WF Process #])
+This statements basically gives the count of WF Process divided by the total of count WF for that quarter. It is used for percent stacking. 
+
+IF([Duration]>=0 and Duration <= 1, '0-1',
+IF([Duration]>=2 and Duration <= 3, '2-3',
+IF([Duration]>=4 and Duration <= 7, '4-7',
+IF([Duration]>=8, 'Greater than equal 8')))) 
+This statement divides duration into the labels 
+if((aggr(count(distinct [WF Process #]),[FCID #],[Fis Quarter]))>8,'Greater than 8',aggr(count(distinct [WF Process #]),[FCID #],[Fis Quarter]))
+This statement gives the count of FCID greater than 8 
+Load CE
+Where CE = 'BALANVI
+;	HERNACA1
+;	MAZOTTO
+;	MONTOAN
+;	MURTAST
+;	NGUYEDU1
+;	TANAKCO
+;	WANGCH2
+; JENSEST
+;	WARDBR1
+;	RENOCH
+;	NOORSNA
+;	HEWITDE';
+This statement will filter the respective CE. 
+Aggr(Sum(Sales), Customer, Salesperson) 
+Aggr function in Qlik works similar to GROUP BY function in SQL, where in the above statement gives sum sales group by customers and sales person. 
+=if((aggr(count(distinct [WF Process #]),[FCID #],[Fis Quarter]))>=8,'Greater than or equal to 8',aggr(count(distinct [WF Process #]),[FCID #],[Fis Quarter]))
